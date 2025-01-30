@@ -347,9 +347,11 @@ function formatPhoneNumber(phoneNumber) {
         return '+' + digits.slice(2);
     }
 
-    // If number is 10 digits, assume Indian number and add +91 prefix
-    if (digits.length === 10) {
-        return '+91' + digits;
+    // If number is exactly 10 digits or starts with a single '0' followed by 9 digits
+    if (digits.length === 10 || (digits.length === 11 && digits.startsWith('0'))) {
+        // If it starts with '0', remove it before adding the country code
+        const baseNumber = digits.startsWith('0') ? digits.slice(1) : digits;
+        return '+91' + baseNumber;
     }
 
     // If number already has country code (length > 10 and doesn't start with '00')
